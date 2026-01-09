@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRUFIX | Assistência Técnica de Elite em Guarulhos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --primary: #76ff03;
+            --bg-dark: #030303;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-syncopate { font-family: 'Syncopate', sans-serif; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--primary);
+        }
+        .input-round {
+            @apply w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-[#76ff03] transition-all;
+        }
+        .navbar {
+            backdrop-filter: blur(15px);
+            background: rgba(3, 3, 3, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <nav class="navbar fixed top-0 w-full z-[110] h-20 flex items-center px-6 lg:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#inicio" class="flex items-center gap-4 relative z-[120]">
+                <div class="w-10 h-10 bg-[#76ff03] rounded-lg flex items-center justify-center">
+                    <i data-lucide="wrench" class="text-black w-6 h-6"></i>
+                </div>
+                <span class="font-syncopate text-xl tracking-tighter">GRUFIX</span>
+            </a>
+
+            <ul class="nav-menu hidden md:flex items-center gap-8">
+                <li><a href="#inicio" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#76ff03] transition-colors">Início</a></li>
+                <li><a href="#como-funciona" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#76ff03] transition-colors">Como Funciona</a></li>
+                <li><a href="#servicos" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#76ff03] transition-colors">Serviços</a></li>
+                <li><a href="#contato" class="bg-[#76ff03] text-black px-7 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all shadow-lg shadow-[#76ff03]/10">Chamar Técnico</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="inicio" class="min-h-screen flex items-center pt-24 pb-12 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 50px 50px; transform: perspective(500px) rotateX(60deg) translateY(-200px);"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl">
+                <span class="text-[#76ff03] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Assistência Técnica Local em Guarulhos</span>
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-none mb-8">
+                    TECNOLOGIA DE <br><span class="text-transparent" style="-webkit-text-stroke: 1px #76ff03;">PONTA</span> NO SEU LOCAL.
+                </h1>
+                <p class="text-gray-400 text-lg max-w-xl mb-10">Manutenção especializada em hardware, software e redes com atendimento ágil e transparente para você ou sua empresa.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#contato" class="bg-white text-black px-8 py-4 rounded-full font-black uppercase text-xs tracking-widest hover:bg-[#76ff03] transition-all">Solicitar Visita</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="como-funciona" class="py-32 px-6 bg-[#030303]">
+        <div class="container mx-auto">
+            <div class="text-center mb-24 space-y-4">
+                <span class="text-[#76ff03] font-bold tracking-widest text-xs uppercase">Processo</span>
+                <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase">Simples e Rápido</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="space-y-4">
+                    <div class="text-4xl font-syncopate text-[#76ff03]/20">01</div>
+                    <h4 class="text-xl font-black uppercase">Agendamento</h4>
+                    <p class="text-gray-500">Você entra em contato via WhatsApp ou formulário descrevendo o problema.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-4xl font-syncopate text-[#76ff03]/20">02</div>
+                    <h4 class="text-xl font-black uppercase">Diagnóstico</h4>
+                    <p class="text-gray-500">Nossa equipe realiza uma pré-análise e define a melhor estratégia de reparo.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="text-4xl font-syncopate text-[#76ff03]/20">03</div>
+                    <h4 class="text-xl font-black uppercase">Solução Local</h4>
+                    <p class="text-gray-500">O técnico vai até você e resolve o problema com garantia e peças de qualidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos" class="py-32 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-24 space-y-4">
+                <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase">Nossas Especialidades</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="service-card glass-card p-10 rounded-[35px] space-y-6 group">
+                    <div class="text-[#76ff03] group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="smartphone" class="w-9 h-9"></i>
+                    </div>
+                    <h3 class="text-xl font-black uppercase tracking-tight">Manutenção de Celular</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Troca de tela, baterias, conectores e recuperação de aparelhos. Android e iPhone.</p>
+                </div>
+
+                <div class="service-card glass-card p-10 rounded-[35px] space-y-6 group">
+                    <div class="text-[#76ff03] group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="monitor" class="w-9 h-9"></i>
+                    </div>
+                    <h3 class="text-xl font-black uppercase tracking-tight">Manutenção de PCs</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Lentidão, travamentos ou PC que não liga. Resolvemos no local com limpeza técnica.</p>
+                </div>
+
+                <div class="service-card glass-card p-10 rounded-[35px] space-y-6 group">
+                    <div class="text-[#76ff03] group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="wifi" class="w-9 h-9"></i>
+                    </div>
+                    <h3 class="text-xl font-black uppercase tracking-tight">Redes & Wi-Fi</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Configuração de roteadores e mesh. Acabamos com os pontos cegos de internet.</p>
+                </div>
+
+                <div class="service-card glass-card p-10 rounded-[35px] space-y-6 group border-[#76ff03]/20 md:col-span-2 lg:col-span-3">
+                    <div class="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+                        <div class="text-[#76ff03]"><i data-lucide="zap" class="w-12 h-12"></i></div>
+                        <div>
+                            <h3 class="text-xl font-black uppercase tracking-tight text-[#76ff03]">Visita Expressa Guarulhos</h3>
+                            <p class="text-gray-400 text-sm">Atendimento prioritário em toda a região com técnicos certificados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="py-32 px-6">
+        <div class="container mx-auto max-w-5xl">
+            <div class="glass-card p-8 sm:p-16 rounded-[50px]">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div class="space-y-8">
+                        <h2 class="text-4xl font-black uppercase tracking-tighter leading-tight">FALE COM A <br><span class="text-[#76ff03]">EQUIPE ELITE</span></h2>
+                        <p class="text-gray-500">Estamos prontos para resolver seu problema técnico hoje mesmo.</p>
+                    </div>
+
+                    <form id="contactForm" class="space-y-4">
+                        <input type="text" placeholder="Seu Nome ou Empresa" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 focus:border-[#76ff03] outline-none">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="WhatsApp" class="bg-white/5 border border-white/10 rounded-2xl py-4 px-6 focus:border-[#76ff03] outline-none">
+                            <input type="text" placeholder="Assunto" class="bg-white/5 border border-white/10 rounded-2xl py-4 px-6 focus:border-[#76ff03] outline-none">
+                        </div>
+                        <button class="w-full bg-[#76ff03] text-black font-black uppercase py-5 rounded-2xl hover:bg-white transition-all">Enviar Solicitação</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="pt-24 pb-12 px-6 border-t border-white/5 bg-[#030303]">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-[#76ff03] rounded flex items-center justify-center">
+                            <i data-lucide="wrench" class="text-black w-4 h-4"></i>
+                        </div>
+                        <span class="font-syncopate text-lg tracking-tighter">GRUFIX</span>
+                    </div>
+                    <p class="text-gray-500 text-xs font-bold leading-relaxed uppercase tracking-widest">
+                        Excelência técnica em Guarulhos. Sua tecnologia em boas mãos.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white">Navegação</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#inicio" class="text-gray-500 text-sm hover:text-[#76ff03]">Início</a></li>
+                        <li><a href="#como-funciona" class="text-gray-500 text-sm hover:text-[#76ff03]">Como Funciona</a></li>
+                        <li><a href="#servicos" class="text-gray-500 text-sm hover:text-[#76ff03]">Serviços</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-6">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white">Contacto</h4>
+                    <div class="text-gray-500 text-sm uppercase font-bold tracking-tighter">
+                        Guarulhos, SP<br>
+                        (11) 98096-0531
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-[10px] text-gray-600 font-bold uppercase tracking-widest">
+                    &copy; 2024 GRUFIX | Todos os direitos reservados.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5511980960531" target="_blank" class="fixed bottom-8 right-8 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-90 transition-all z-[200]">
+        <i data-lucide="message-circle" class="w-7 h-7 text-white"></i>
+    </a>
+
+    <script>
+        // Inicializa os ícones do Lucide
+        lucide.createIcons();
+
+        // Efeito de scroll na navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(3, 3, 3, 0.95)';
+            } else {
+                nav.style.background = 'rgba(3, 3, 3, 0.8)';
+            }
+        });
+    </script>
+</body>
+</html>
