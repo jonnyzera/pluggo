@@ -43,6 +43,7 @@
             backdrop-filter: blur(15px);
             background: rgba(8, 8, 8, 0.85);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
         }
         .reveal {
             opacity: 0;
@@ -61,198 +62,218 @@
             color: #fbbc04;
             fill: #fbbc04;
         }
-        /* Icon Glow Effect for Premium Look */
+        /* Efeito de brilho nos ícones */
         .icon-premium {
-            filter: drop-shadow(0 0 8px rgba(126, 217, 87, 0.4));
+            filter: drop-shadow(0 0 10px rgba(126, 217, 87, 0.4));
+        }
+
+        /* Menu Mobile */
+        #mobile-menu {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+        }
+        #mobile-menu.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
     <!-- Navbar -->
-    <nav class="navbar fixed top-0 w-full z-[110] h-20 flex items-center px-6 lg:px-12">
+    <nav class="navbar fixed top-0 w-full z-[110] h-20 flex items-center px-4 md:px-8 lg:px-12">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#inicio" class="flex items-center gap-3 relative z-[120]">
-                <div class="w-10 h-10 bg-white rounded-xl overflow-hidden flex items-center justify-center border-2 border-[#7ed957]">
-                    <img src="jonnyzera/pluggo/pluggo-06cd5e9bc5c49275f298d69b53f2effb0e63451f/template/upload/PlugGo.jpeg" alt="Logo PlugGo" class="w-full h-full object-cover">
+                <!-- Logo Aumentada -->
+                <div class="w-12 h-12 md:w-14 md:h-14 bg-white rounded-2xl overflow-hidden flex items-center justify-center border-2 border-[#7ed957] shadow-lg shadow-[#7ed957]/20">
+                    <img src="/template/upload/PlugGo.jpeg" alt="Logo PlugGo" class="w-full h-full object-cover">
                 </div>
-                <span class="font-syncopate text-xl tracking-tighter uppercase">PLUGGO<span class="text-[#7ed957]">STORE</span></span>
+                <span class="font-syncopate text-lg md:text-xl lg:text-2xl tracking-tighter uppercase whitespace-nowrap">PLUGGO<span class="text-[#7ed957]">STORE</span></span>
             </a>
 
-            <ul class="hidden md:flex items-center gap-8">
-                <li><a href="#inicio" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors">Início</a></li>
-                <li><a href="#servicos" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors">Serviços</a></li>
-                <li><a href="#produtos" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors">Produtos</a></li>
-                <li><a href="#unidades" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors">Unidades</a></li>
-                <li><a href="https://wa.me/5511942535688" target="_blank" class="bg-[#7ed957] text-black px-7 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all shadow-lg shadow-[#7ed957]/10">Falar com Especialista</a></li>
+            <!-- Menu Desktop -->
+            <ul class="hidden lg:flex items-center gap-6 lg:gap-8">
+                <li><a href="#inicio" class="font-bold text-[11px] uppercase tracking-widest hover:text-[#7ed957] transition-colors">Início</a></li>
+                <li><a href="#servicos" class="font-bold text-[11px] uppercase tracking-widest hover:text-[#7ed957] transition-colors">Serviços</a></li>
+                <li><a href="#produtos" class="font-bold text-[11px] uppercase tracking-widest hover:text-[#7ed957] transition-colors">Produtos</a></li>
+                <li><a href="#unidades" class="font-bold text-[11px] uppercase tracking-widest hover:text-[#7ed957] transition-colors">Unidades</a></li>
+                <li><a href="https://wa.me/5511942535688" target="_blank" class="bg-[#7ed957] text-black px-8 py-3 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-white transition-all shadow-lg shadow-[#7ed957]/10">Falar com Especialista</a></li>
             </ul>
 
-            <button class="md:hidden text-[#7ed957]" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                <i data-lucide="menu" class="w-8 h-8"></i>
+            <button class="lg:hidden text-[#7ed957] p-2" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-9 h-9"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden fixed inset-0 z-[150] bg-black/95 flex flex-col items-center justify-center gap-8 md:hidden">
-        <button class="absolute top-6 right-6 text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-            <i data-lucide="x" class="w-8 h-8"></i>
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="fixed inset-0 z-[150] bg-black/98 flex flex-col items-center justify-center gap-8 lg:hidden px-6 text-center">
+        <button class="absolute top-6 right-6 text-[#7ed957]" onclick="toggleMenu()">
+            <i data-lucide="x" class="w-10 h-10"></i>
         </button>
-        <a href="#inicio" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-2xl font-black uppercase tracking-widest">Início</a>
-        <a href="#servicos" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-2xl font-black uppercase tracking-widest">Serviços</a>
-        <a href="#produtos" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-2xl font-black uppercase tracking-widest">Produtos</a>
-        <a href="#unidades" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-2xl font-black uppercase tracking-widest">Unidades</a>
-        <a href="https://wa.me/5511942535688" class="bg-[#7ed957] text-black px-8 py-4 rounded-full font-black uppercase">WhatsApp</a>
+        <a href="#inicio" onclick="toggleMenu()" class="text-3xl font-black uppercase tracking-widest">Início</a>
+        <a href="#servicos" onclick="toggleMenu()" class="text-3xl font-black uppercase tracking-widest">Serviços</a>
+        <a href="#produtos" onclick="toggleMenu()" class="text-3xl font-black uppercase tracking-widest">Produtos</a>
+        <a href="#unidades" onclick="toggleMenu()" class="text-3xl font-black uppercase tracking-widest">Unidades</a>
+        <a href="https://wa.me/5511942535688" class="bg-[#7ed957] text-black px-12 py-5 rounded-full font-black uppercase text-sm shadow-xl">Falar com Especialista</a>
     </div>
 
     <!-- Hero Section -->
-    <section id="inicio" class="min-h-screen flex items-center pt-24 pb-12 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-1/2 h-full bg-[#7ed957]/5 blur-[120px] rounded-full translate-x-1/2"></div>
+    <section id="inicio" class="min-h-screen flex items-center pt-28 pb-16 relative overflow-hidden px-4 md:px-8">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-[#7ed957]/5 blur-[120px] rounded-full translate-x-1/4"></div>
         
-        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
-            <div class="reveal">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#7ed957]/30 bg-[#7ed957]/5 mb-6">
-                    <span class="w-2 h-2 rounded-full bg-[#7ed957] animate-pulse"></span>
-                    <span class="text-[10px] font-black uppercase tracking-widest text-[#7ed957]">Líder em Assistência Técnica Física</span>
+        <div class="container mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="reveal text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7ed957]/30 bg-[#7ed957]/5 mb-8">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#7ed957] animate-pulse"></span>
+                    <span class="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-[#7ed957]">Líder em Assistência Técnica Física</span>
                 </div>
-                <h1 class="text-5xl sm:text-6xl xl:text-8xl font-black tracking-tighter leading-[0.9] mb-8 uppercase">
+                
+                <!-- Título Hero com linhas bem juntas -->
+                <h1 class="text-4xl sm:text-6xl md:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.95] md:leading-[0.9] mb-8 uppercase">
                     Sua tecnologia em <br><span class="text-stroke">boas mãos.</span>
                 </h1>
-                <p class="text-gray-400 text-lg max-w-xl mb-10 leading-relaxed">
+                
+                <p class="text-gray-400 text-base md:text-lg lg:text-xl max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed">
                     A PlugGo Store é referência em assistência técnica especializada. Conte com profissionais certificados para reparos de celulares, notebooks e games em nossas unidades localizadas no Sonda Supermercados.
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#servicos" class="bg-[#7ed957] text-black px-10 py-5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-white transition-all shadow-xl shadow-[#7ed957]/20">Ver Serviços</a>
+                <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start">
+                    <a href="#servicos" class="bg-[#7ed957] text-black px-10 py-5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-white transition-all shadow-xl">Ver Serviços</a>
                     <a href="#unidades" class="border border-white/10 text-white px-10 py-5 rounded-full font-black uppercase text-xs tracking-widest hover:bg-white/5 transition-all">Nossas Unidades</a>
                 </div>
             </div>
             
             <div class="relative reveal hidden lg:block" style="transition-delay: 200ms;">
-                <div class="glass-card p-4 rounded-[50px] overflow-hidden shadow-2xl relative">
-                    <img src="https://images.unsplash.com/photo-1556656793-062ff9878273?auto=format&fit=crop&q=80&w=1000" alt="Smartphone Repair" class="w-full h-[600px] object-cover rounded-[40px]">
-                    <div class="absolute bottom-10 left-10 p-8 glass-card rounded-3xl border-white/10 max-w-xs">
+                <div class="glass-card p-4 rounded-[60px] overflow-hidden shadow-2xl relative">
+                    <img src="/template/upload/plug_vilaguilherme.jpg" alt="Smartphone Repair" class="w-full h-[600px] object-cover rounded-[50px]">
+                    <div class="absolute bottom-12 left-12 p-8 glass-card rounded-3xl border-white/10 max-w-xs">
                         <div class="flex gap-1 mb-2">
-                            <i data-lucide="star" class="w-4 h-4 google-star"></i>
-                            <i data-lucide="star" class="w-4 h-4 google-star"></i>
-                            <i data-lucide="star" class="w-4 h-4 google-star"></i>
-                            <i data-lucide="star" class="w-4 h-4 google-star"></i>
-                            <i data-lucide="star" class="w-4 h-4 google-star"></i>
+                            <i data-lucide="star" class="w-5 h-5 google-star"></i>
+                            <i data-lucide="star" class="w-5 h-5 google-star"></i>
+                            <i data-lucide="star" class="w-5 h-5 google-star"></i>
+                            <i data-lucide="star" class="w-5 h-5 google-star"></i>
+                            <i data-lucide="star" class="w-5 h-5 google-star"></i>
                         </div>
-                        <p class="text-sm font-bold">Confiança técnica comprovada por milhares de clientes no Google.</p>
+                        <p class="text-sm font-bold leading-tight">Confiança técnica comprovada por milhares de clientes no Google.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção de Serviços Detalhada -->
-    <section id="servicos" class="py-32 px-6 bg-[#060606]">
+    <!-- Serviços -->
+    <section id="servicos" class="py-24 md:py-32 px-4 md:px-8 bg-[#060606]">
         <div class="container mx-auto">
-            <div class="text-center mb-24 space-y-4 reveal">
-                <span class="text-[#7ed957] font-bold tracking-widest text-xs uppercase">Especialidades</span>
-                <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">O que fazemos</h2>
+            <div class="text-center mb-16 md:mb-24 space-y-4 reveal">
+                <span class="text-[#7ed957] font-bold tracking-widest text-xs uppercase italic">Especialidades</span>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter uppercase italic leading-none">O que fazemos</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 max-w-7xl mx-auto">
+                
                 <!-- Reparo de Telas -->
-                <div class="glass-card p-10 rounded-[40px] space-y-6 group reveal">
+                <div class="glass-card p-8 md:p-12 rounded-[40px] space-y-6 group reveal">
                     <div class="text-[#7ed957] group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="smartphone" class="w-10 h-10"></i>
+                        <i data-lucide="smartphone" class="w-16 h-16 icon-premium"></i>
                     </div>
-                    <h3 class="text-xl font-black uppercase">Reparo de Telas</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Troca de display e touch com peças originais e garantia de qualidade.</p>
-                    <ul class="text-[10px] font-black uppercase tracking-widest text-gray-400 space-y-2 pt-2">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-[#7ed957]"></i> Todas as marcas</li>
-                        <li class="flex items-center gap-2"><i data-lucide="shield" class="w-3 h-3 text-[#7ed957]"></i> Garantia de 90 dias</li>
-                        <li class="flex items-center gap-2"><i data-lucide="zap" class="w-3 h-3 text-[#7ed957]"></i> Serviço em até 24h</li>
+                    <h3 class="text-xl md:text-2xl font-black uppercase italic leading-none">Reparo de Telas</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">Troca de display e touch com peças originais e garantia de qualidade.</p>
+                    <ul class="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400 space-y-3 pt-4 border-t border-white/5">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7ed957]"></i> Todas as marcas</li>
+                        <li class="flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4 text-[#7ed957]"></i> Garantia de 90 dias</li>
+                        <li class="flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-[#7ed957]"></i> Serviço em até 24h</li>
                     </ul>
                 </div>
 
                 <!-- Bateria -->
-                <div class="glass-card p-10 rounded-[40px] space-y-6 group reveal" style="transition-delay: 100ms;">
+                <div class="glass-card p-8 md:p-12 rounded-[40px] space-y-6 group reveal" style="transition-delay: 100ms;">
                     <div class="text-[#7ed957] group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="battery-charging" class="w-10 h-10"></i>
+                        <i data-lucide="battery-charging" class="w-16 h-16 icon-premium"></i>
                     </div>
-                    <h3 class="text-xl font-black uppercase">Bateria</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Substituição de bateria com alta capacidade e durabilidade.</p>
-                    <ul class="text-[10px] font-black uppercase tracking-widest text-gray-400 space-y-2 pt-2">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-[#7ed957]"></i> Baterias originais</li>
-                        <li class="flex items-center gap-2"><i data-lucide="plus" class="w-3 h-3 text-[#7ed957]"></i> Maior vida útil</li>
-                        <li class="flex items-center gap-2"><i data-lucide="activity" class="w-3 h-3 text-[#7ed957]"></i> Teste de carga incluído</li>
+                    <h3 class="text-xl md:text-2xl font-black uppercase italic leading-none">Bateria</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">Substituição de bateria com alta capacidade e durabilidade prolongada.</p>
+                    <ul class="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400 space-y-3 pt-4 border-t border-white/5">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7ed957]"></i> Baterias originais</li>
+                        <li class="flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4 text-[#7ed957]"></i> Maior vida útil</li>
+                        <li class="flex items-center gap-2"><i data-lucide="activity" class="w-4 h-4 text-[#7ed957]"></i> Teste de carga incluído</li>
                     </ul>
                 </div>
 
                 <!-- Manutenção Geral -->
-                <div class="glass-card p-10 rounded-[40px] space-y-6 group reveal" style="transition-delay: 200ms;">
+                <div class="glass-card p-8 md:p-12 rounded-[40px] space-y-6 group reveal" style="transition-delay: 200ms;">
                     <div class="text-[#7ed957] group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="settings" class="w-10 h-10"></i>
+                        <i data-lucide="settings" class="w-16 h-16 icon-premium"></i>
                     </div>
-                    <h3 class="text-xl font-black uppercase">Manutenção Geral</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Limpeza, atualização e otimização do seu dispositivo.</p>
-                    <ul class="text-[10px] font-black uppercase tracking-widest text-gray-400 space-y-2 pt-2">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-[#7ed957]"></i> Diagnóstico completo</li>
-                        <li class="flex items-center gap-2"><i data-lucide="brush" class="w-3 h-3 text-[#7ed957]"></i> Limpeza interna</li>
-                        <li class="flex items-center gap-2"><i data-lucide="upload" class="w-3 h-3 text-[#7ed957]"></i> Atualização de software</li>
+                    <h3 class="text-xl md:text-2xl font-black uppercase italic leading-none">Manutenção Geral</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">Limpeza química, atualização de software e otimização total do sistema.</p>
+                    <ul class="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400 space-y-3 pt-4 border-t border-white/5">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7ed957]"></i> Diagnóstico completo</li>
+                        <li class="flex items-center gap-2"><i data-lucide="brush" class="w-4 h-4 text-[#7ed957]"></i> Limpeza interna</li>
+                        <li class="flex items-center gap-2"><i data-lucide="upload" class="w-4 h-4 text-[#7ed957]"></i> Atualização de software</li>
                     </ul>
                 </div>
 
                 <!-- Diagnóstico Gratuito -->
-                <div class="glass-card p-10 rounded-[40px] space-y-6 group reveal">
+                <div class="glass-card p-8 md:p-12 rounded-[40px] space-y-6 group reveal">
                     <div class="text-[#7ed957] group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="search" class="w-10 h-10"></i>
+                        <i data-lucide="search" class="w-16 h-16 icon-premium"></i>
                     </div>
-                    <h3 class="text-xl font-black uppercase">Diagnóstico Gratuito</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Identificação precisa do problema sem custo inicial.</p>
-                    <ul class="text-[10px] font-black uppercase tracking-widest text-gray-400 space-y-2 pt-2">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-[#7ed957]"></i> Avaliação técnica</li>
-                        <li class="flex items-center gap-2"><i data-lucide="file-text" class="w-3 h-3 text-[#7ed957]"></i> Orçamento detalhado</li>
-                        <li class="flex items-center gap-2"><i data-lucide="heart" class="w-3 h-3 text-[#7ed957]"></i> Sem compromisso</li>
+                    <h3 class="text-xl md:text-2xl font-black uppercase italic leading-none">Diagnóstico Gratuito</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">Identificação precisa do problema sem qualquer custo inicial de análise.</p>
+                    <ul class="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400 space-y-3 pt-4 border-t border-white/5">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7ed957]"></i> Avaliação técnica</li>
+                        <li class="flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4 text-[#7ed957]"></i> Orçamento detalhado</li>
+                        <li class="flex items-center gap-2"><i data-lucide="heart" class="w-4 h-4 text-[#7ed957]"></i> Sem compromisso</li>
                     </ul>
                 </div>
 
                 <!-- Atendimento Local -->
-                <div class="glass-card p-10 rounded-[40px] space-y-6 group reveal" style="transition-delay: 100ms;">
+                <div class="glass-card p-8 md:p-12 rounded-[40px] space-y-6 group reveal" style="transition-delay: 100ms;">
                     <div class="text-[#7ed957] group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="store" class="w-10 h-10"></i>
+                        <i data-lucide="store" class="w-16 h-16 icon-premium"></i>
                     </div>
-                    <h3 class="text-xl font-black uppercase">Atendimento Local</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Praticidade e segurança nas nossas lojas físicas.</p>
-                    <ul class="text-[10px] font-black uppercase tracking-widest text-gray-400 space-y-2 pt-2">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-[#7ed957]"></i> Atendimento presencial</li>
-                        <li class="flex items-center gap-2"><i data-lucide="clock" class="w-3 h-3 text-[#7ed957]"></i> Horário estendido</li>
-                        <li class="flex items-center gap-2 font-black text-white bg-white/5 py-1.5 px-3 rounded-xl border border-[#7ed957]/30">
-                            <i data-lucide="parking-circle" class="w-3 h-3 text-[#7ed957]"></i> Estacionamento Sonda <span class="text-[#7ed957] italic ml-1">GRÁTIS</span>
+                    <h3 class="text-xl md:text-2xl font-black uppercase italic leading-none">Atendimento Local</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">Praticidade e total segurança com nossas unidades físicas especializadas.</p>
+                    <ul class="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400 space-y-3 pt-4 border-t border-white/5">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7ed957]"></i> Atendimento presencial</li>
+                        <li class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-[#7ed957]"></i> Horário estendido</li>
+                        <!-- Ajuste: Apenas Estacionamento Grátis -->
+                        <li class="flex items-center gap-2 font-black text-white bg-white/5 py-2 px-3 rounded-xl border border-[#7ed957]/30 text-[9px]">
+                            <i data-lucide="parking-circle" class="w-4 h-4 text-[#7ed957]"></i> <span class="uppercase tracking-widest">ESTACIONAMENTO</span> <span class="text-[#7ed957] italic ml-1 uppercase font-bold tracking-widest">GRÁTIS</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Garantia Extendida -->
-                <div class="glass-card p-10 rounded-[40px] space-y-6 group reveal" style="transition-delay: 200ms;">
+                <div class="glass-card p-8 md:p-12 rounded-[40px] space-y-6 group reveal" style="transition-delay: 200ms;">
                     <div class="text-[#7ed957] group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="shield-check" class="w-10 h-10"></i>
+                        <i data-lucide="shield-check" class="w-16 h-16 icon-premium"></i>
                     </div>
-                    <h3 class="text-xl font-black uppercase">Garantia Extendida</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Proteção adicional para sua tranquilidade total.</p>
-                    <ul class="text-[10px] font-black uppercase tracking-widest text-gray-400 space-y-2 pt-2">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-[#7ed957]"></i> Até 90 dias de garantia</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-[#7ed957]"></i> Cobertura completa</li>
-                        <li class="flex items-center gap-2"><i data-lucide="headphones" class="w-3 h-3 text-[#7ed957]"></i> Suporte pós-serviço</li>
+                    <h3 class="text-xl md:text-2xl font-black uppercase italic leading-none">Garantia Extendida</h3>
+                    <p class="text-gray-500 text-sm md:text-base leading-relaxed">Proteção adicional para sua tranquilidade total após o reparo efetuado.</p>
+                    <ul class="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400 space-y-3 pt-4 border-t border-white/5">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7ed957]"></i> Até 90 dias de garantia</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#7ed957]"></i> Cobertura completa</li>
+                        <li class="flex items-center gap-2"><i data-lucide="headphones" class="w-4 h-4 text-[#7ed957]"></i> Suporte pós-serviço</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção de Eletrônicos em Evidência -->
-    <section id="produtos" class="py-32 px-6">
+    <!-- Produtos -->
+    <section id="produtos" class="py-24 md:py-32 px-4 md:px-8">
         <div class="container mx-auto">
-            <div class="text-center mb-24 space-y-4 reveal">
+            <div class="text-center mb-16 md:mb-24 space-y-4 reveal">
                 <span class="text-[#7ed957] font-bold tracking-widest text-xs uppercase italic">Destaques da Loja</span>
-                <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[0.9]">Eletrônicos em <br><span class="text-stroke">Evidência</span></h2>
-                <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto font-medium opacity-80">Equipamentos de alta qualidade com a garantia e suporte PlugGo.</p>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter uppercase leading-[0.9]">Eletrônicos em <br><span class="text-stroke">Evidência</span></h2>
+                <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto font-medium opacity-80">Equipamentos de alta qualidade com a garantia e suporte PlugGo.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
                 <!-- Smartphones -->
                 <div class="glass-card rounded-[40px] overflow-hidden group reveal">
                     <div class="h-64 overflow-hidden relative">
@@ -261,12 +282,12 @@
                     </div>
                     <div class="p-10 space-y-5">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
-                                <i data-lucide="smartphone" class="w-6 h-6"></i>
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
+                                <i data-lucide="smartphone" class="w-8 h-8"></i>
                             </div>
-                            <h3 class="text-xl font-black uppercase italic tracking-tighter">Smartphones</h3>
+                            <h3 class="text-xl font-black uppercase italic tracking-tighter leading-tight">Smartphones</h3>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed">Últimos lançamentos das melhores marcas mundiais com procedência.</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Últimos lançamentos das melhores marcas mundiais com procedência garantida.</p>
                         <a href="https://wa.me/5511942535688" target="_blank" class="inline-flex items-center gap-3 text-[#7ed957] font-black uppercase text-[10px] tracking-[0.2em] group-hover:gap-5 transition-all">Consultar agora <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
@@ -275,14 +296,14 @@
                 <div class="glass-card rounded-[40px] overflow-hidden group reveal" style="transition-delay: 100ms;">
                     <div class="h-64 overflow-hidden relative">
                         <div class="absolute top-5 left-5 z-10 bg-white text-black text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">Popular</div>
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800" alt="Fones" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800" alt="Fones de Ouvido" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="p-10 space-y-5">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
-                                <i data-lucide="headphones" class="w-6 h-6"></i>
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
+                                <i data-lucide="headphones" class="w-8 h-8"></i>
                             </div>
-                            <h3 class="text-xl font-black uppercase italic tracking-tighter">Fones de Ouvido</h3>
+                            <h3 class="text-xl font-black uppercase italic tracking-tighter leading-tight">Fones de Ouvido</h3>
                         </div>
                         <p class="text-gray-500 text-sm leading-relaxed">Bluetooth, wireless e com cancelamento de ruído profissional.</p>
                         <a href="https://wa.me/5511942535688" target="_blank" class="inline-flex items-center gap-3 text-[#7ed957] font-black uppercase text-[10px] tracking-[0.2em] group-hover:gap-5 transition-all">Consultar agora <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
@@ -292,15 +313,14 @@
                 <!-- Carregadores -->
                 <div class="glass-card rounded-[40px] overflow-hidden group reveal" style="transition-delay: 200ms;">
                     <div class="h-64 overflow-hidden relative">
-                        <!-- Imagem de Carregador Funcional -->
                         <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&q=80&w=800" alt="Carregadores" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="p-10 space-y-5">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
-                                <i data-lucide="zap" class="w-6 h-6"></i>
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
+                                <i data-lucide="zap" class="w-8 h-8"></i>
                             </div>
-                            <h3 class="text-xl font-black uppercase italic tracking-tighter">Carregadores</h3>
+                            <h3 class="text-xl font-black uppercase italic tracking-tighter leading-tight">Carregadores</h3>
                         </div>
                         <p class="text-gray-500 text-sm leading-relaxed">Carregamento rápido Turbo e tecnologia wireless por indução.</p>
                         <a href="https://wa.me/5511942535688" target="_blank" class="inline-flex items-center gap-3 text-[#7ed957] font-black uppercase text-[10px] tracking-[0.2em] group-hover:gap-5 transition-all">Consultar agora <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
@@ -310,17 +330,16 @@
                 <!-- Capas -->
                 <div class="glass-card rounded-[40px] overflow-hidden group reveal">
                     <div class="h-64 overflow-hidden relative">
-                        <!-- Imagem de Capas Funcional -->
-                        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&q=80&w=800" alt="Capas e Películas" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&q=80&w=800" alt="Capas" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="p-10 space-y-5">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
-                                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
+                                <i data-lucide="shield-check" class="w-8 h-8"></i>
                             </div>
-                            <h3 class="text-xl font-black uppercase italic tracking-tighter">Capas & Películas</h3>
+                            <h3 class="text-xl font-black uppercase italic tracking-tighter leading-tight">Capas & Películas</h3>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed">Proteção premium militar para blindar seu smartphone contra quedas.</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Proteção premium militar para blindar seu smartphone contra impactos.</p>
                         <a href="https://wa.me/5511942535688" target="_blank" class="inline-flex items-center gap-3 text-[#7ed957] font-black uppercase text-[10px] tracking-[0.2em] group-hover:gap-5 transition-all">Consultar agora <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
@@ -328,14 +347,14 @@
                 <!-- Smartwatches -->
                 <div class="glass-card rounded-[40px] overflow-hidden group reveal" style="transition-delay: 100ms;">
                     <div class="h-64 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&q=80&w=800" alt="Watch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&q=80&w=800" alt="Smartwatches" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="p-10 space-y-5">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
-                                <i data-lucide="watch" class="w-6 h-6"></i>
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
+                                <i data-lucide="watch" class="w-8 h-8"></i>
                             </div>
-                            <h3 class="text-xl font-black uppercase italic tracking-tighter">Smartwatches</h3>
+                            <h3 class="text-xl font-black uppercase italic tracking-tighter leading-tight">Smartwatches</h3>
                         </div>
                         <p class="text-gray-500 text-sm leading-relaxed">Tecnologia vestível de ponta com monitoramento de saúde completo.</p>
                         <a href="https://wa.me/5511942535688" target="_blank" class="inline-flex items-center gap-3 text-[#7ed957] font-black uppercase text-[10px] tracking-[0.2em] group-hover:gap-5 transition-all">Consultar agora <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
@@ -345,16 +364,16 @@
                 <!-- Caixas de Som -->
                 <div class="glass-card rounded-[40px] overflow-hidden group reveal" style="transition-delay: 200ms;">
                     <div class="h-64 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&q=80&w=800" alt="Som" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&q=80&w=800" alt="Caixas de Som" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
                     <div class="p-10 space-y-5">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
-                                <i data-lucide="speaker" class="w-6 h-6"></i>
+                            <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] icon-premium">
+                                <i data-lucide="speaker" class="w-8 h-8"></i>
                             </div>
-                            <h3 class="text-xl font-black uppercase italic tracking-tighter">Caixas de Som</h3>
+                            <h3 class="text-xl font-black uppercase italic tracking-tighter leading-tight">Caixas de Som</h3>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed">Som de alta fidelidade portátil para todos os ambientes e festas.</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Som portátil de alta fidelidade para todos os ambientes.</p>
                         <a href="https://wa.me/5511942535688" target="_blank" class="inline-flex items-center gap-3 text-[#7ed957] font-black uppercase text-[10px] tracking-[0.2em] group-hover:gap-5 transition-all">Consultar agora <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
@@ -362,47 +381,45 @@
         </div>
     </section>
 
-    <!-- Seção de Unidades e Avaliações Separadas -->
-    <section id="unidades" class="py-32 px-6 bg-[#060606]">
+    <!-- Unidades -->
+    <section id="unidades" class="py-24 md:py-32 px-4 md:px-8 bg-[#060606]">
         <div class="container mx-auto">
-            <div class="text-center mb-24 space-y-4 reveal">
-                <span class="text-[#7ed957] font-bold tracking-widest text-xs uppercase">Presença</span>
-                <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[0.9]">Nossas <br><span class="text-stroke">Unidades</span></h2>
+            <div class="text-center mb-16 md:mb-24 space-y-4 reveal">
+                <span class="text-[#7ed957] font-bold tracking-widest text-xs uppercase italic">Presença</span>
+                <h2 class="text-3xl md:text-6xl font-black tracking-tighter uppercase leading-[0.9]">Nossas <br><span class="text-stroke">Unidades</span></h2>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 max-w-6xl mx-auto">
                 <!-- Unidade Vila Guilherme -->
                 <div class="flex flex-col gap-6 reveal">
                     <div class="glass-card rounded-[40px] overflow-hidden flex flex-col h-full border-[#7ed957]/10">
-                        <div class="h-64 overflow-hidden relative">
-                            <img src="jonnyzera/pluggo/pluggo-06cd5e9bc5c49275f298d69b53f2effb0e63451f/template/upload/plug_vilaguilherme.jpg" alt="PlugGo Vila Guilherme" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                        <div class="h-64 md:h-80 overflow-hidden relative">
+                            <img src="/template/upload/plug_vilaguilherme.jpg" alt="Vila Guilherme" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
                             <div class="absolute top-6 right-6 bg-black/80 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 flex items-center gap-2">
                                 <span class="text-[#7ed957] font-black italic">5.0</span>
                                 <div class="flex">
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="p-8 space-y-6 flex-grow flex flex-col justify-between">
-                            <div class="space-y-4">
-                                <h3 class="text-2xl font-black uppercase italic italic leading-none">PlugGo & Go <br><span class="text-[#7ed957] text-[10px] not-italic font-bold tracking-[0.4em]">VILA GUILHERME</span></h3>
-                                <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                                    <i data-lucide="map-pin" class="w-4 h-4 text-[#7ed957]"></i> R. Maria Cândida, 1511 (Sonda Maria Cândida)
+                        <div class="p-8 md:p-12 space-y-8 flex-grow flex flex-col justify-between">
+                            <div class="space-y-4 text-center md:text-left">
+                                <h3 class="text-2xl md:text-3xl font-black uppercase italic leading-none italic text-white">PlugGo & Go <br><span class="text-[#7ed957] text-[11px] md:text-[12px] not-italic font-bold tracking-[0.4em]">VILA GUILHERME</span></h3>
+                                <p class="text-gray-500 text-[11px] font-bold uppercase tracking-widest flex items-center justify-center md:justify-start gap-2">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-[#7ed957]"></i> R. Maria Cândida, 1511 (Sonda Maria Cândida)
                                 </p>
                             </div>
-
                             <div class="bg-white/5 rounded-3xl p-6 border border-white/5 space-y-4">
-                                <p class="text-gray-400 text-[10px] uppercase font-bold tracking-widest leading-relaxed">
+                                <p class="text-gray-400 text-[11px] uppercase font-bold tracking-widest leading-relaxed text-center md:text-left italic">
                                     "Excelente atendimento, equipe prestativa e reparo rápido. Super recomendo a unidade do Sonda!"
                                 </p>
-                                <a href="https://www.google.com/search?q=vila+guilherme+plugo+go" target="_blank" class="block text-[8px] font-black text-[#7ed957] uppercase tracking-[0.3em] hover:underline italic">Ver Comentários no Google →</a>
+                                <a href="https://www.google.com/search?q=vila+guilherme+plugo+go" target="_blank" class="block text-center md:text-left text-[9px] font-black text-[#7ed957] uppercase tracking-[0.3em] hover:underline italic">Ver Comentários no Google →</a>
                             </div>
-
-                            <a href="https://wa.me/5511976032082" target="_blank" class="block w-full text-center bg-[#7ed957] text-black py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-white transition-all shadow-lg shadow-[#7ed957]/10">WhatsApp Unidade</a>
+                            <a href="https://wa.me/5511976032082" target="_blank" class="block w-full text-center bg-[#7ed957] text-black py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-white transition-all shadow-lg">WhatsApp Unidade</a>
                         </div>
                     </div>
                 </div>
@@ -410,35 +427,33 @@
                 <!-- Unidade Guarulhos -->
                 <div class="flex flex-col gap-6 reveal" style="transition-delay: 200ms;">
                     <div class="glass-card rounded-[40px] overflow-hidden flex flex-col h-full border-[#7ed957]/10">
-                        <div class="h-64 overflow-hidden relative">
-                            <img src="jonnyzera/pluggo/pluggo-06cd5e9bc5c49275f298d69b53f2effb0e63451f/template/upload/capcom_loja.jpg" alt="Capcom Guarulhos" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                        <div class="h-64 md:h-80 overflow-hidden relative">
+                            <img src="/template/upload/capcom_loja.jpg" alt="Guarulhos" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
                             <div class="absolute top-6 right-6 bg-black/80 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 flex items-center gap-2">
                                 <span class="text-[#7ed957] font-black italic">4.8</span>
                                 <div class="flex">
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
-                                    <i data-lucide="star" class="w-3 h-3 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 google-star"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="p-8 space-y-6 flex-grow flex flex-col justify-between">
-                            <div class="space-y-4">
-                                <h3 class="text-2xl font-black uppercase italic leading-none">Capcom Informática <br><span class="text-[#7ed957] text-[10px] not-italic font-bold tracking-[0.4em]">GUARULHOS</span></h3>
-                                <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                                    <i data-lucide="map-pin" class="w-4 h-4 text-[#7ed957]"></i> Av. Otávio Braga de Mesquita, 1450 (Sonda Vila Barros)
+                        <div class="p-8 md:p-12 space-y-8 flex-grow flex flex-col justify-between">
+                            <div class="space-y-4 text-center md:text-left">
+                                <h3 class="text-2xl md:text-3xl font-black uppercase italic leading-none italic text-white">Capcom Informática <br><span class="text-[#7ed957] text-[11px] md:text-[12px] not-italic font-bold tracking-[0.4em]">GUARULHOS</span></h3>
+                                <p class="text-gray-500 text-[11px] font-bold uppercase tracking-widest flex items-center justify-center md:justify-start gap-2">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-[#7ed957]"></i> Av. Otávio Braga de Mesquita, 1450 (Sonda Vila Barros)
                                 </p>
                             </div>
-
                             <div class="bg-white/5 rounded-3xl p-6 border border-white/5 space-y-4">
-                                <p class="text-gray-400 text-[10px] uppercase font-bold tracking-widest leading-relaxed">
+                                <p class="text-gray-400 text-[11px] uppercase font-bold tracking-widest leading-relaxed text-center md:text-left italic">
                                     "Serviço de alta qualidade e muita honestidade. Sem dúvida a melhor de Guarulhos!"
                                 </p>
-                                <a href="https://www.google.com/search?q=capcom+guarulhos" target="_blank" class="block text-[8px] font-black text-[#7ed957] uppercase tracking-[0.3em] hover:underline italic">Ver Comentários no Google →</a>
+                                <a href="https://www.google.com/search?q=capcom+guarulhos" target="_blank" class="block text-center md:text-left text-[9px] font-black text-[#7ed957] uppercase tracking-[0.3em] hover:underline italic">Ver Comentários no Google →</a>
                             </div>
-
-                            <a href="https://wa.me/5511942535688" target="_blank" class="block w-full text-center bg-[#7ed957] text-black py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-white transition-all shadow-lg shadow-[#7ed957]/10">WhatsApp Unidade</a>
+                            <a href="https://wa.me/5511942535688" target="_blank" class="block w-full text-center bg-[#7ed957] text-black py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-white transition-all shadow-lg">WhatsApp Unidade</a>
                         </div>
                     </div>
                 </div>
@@ -447,92 +462,97 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-24 px-6 border-t border-white/5 bg-[#030303]">
+    <footer class="py-20 md:py-24 px-6 border-t border-white/5 bg-[#030303]">
         <div class="container mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
-                <div class="space-y-6 text-center md:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-20 text-center md:text-left">
+                
+                <div class="space-y-6">
                     <div class="flex items-center justify-center md:justify-start gap-3">
-                        <div class="w-8 h-8 bg-[#7ed957] rounded flex items-center justify-center">
+                        <div class="w-8 h-8 bg-[#7ed957] rounded flex items-center justify-center shadow-lg">
                             <i data-lucide="plug-zap" class="text-black w-4 h-4"></i>
                         </div>
-                        <span class="font-syncopate text-lg tracking-tighter uppercase">PLUGGO<span class="text-[#7ed957]">STORE</span></span>
+                        <span class="font-syncopate text-lg md:text-xl tracking-tighter uppercase leading-none">PLUGGO<span class="text-[#7ed957]">STORE</span></span>
                     </div>
-                    <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.2em] leading-relaxed">
-                        Sua tecnologia protegida por especialistas em São Paulo e Guarulhos.
+                    <p class="text-gray-500 text-[11px] font-bold uppercase tracking-[0.2em] leading-relaxed max-w-xs mx-auto md:mx-0">
+                        Sua tecnologia protegida por especialistas certificados em São Paulo e Guarulhos.
                     </p>
                 </div>
 
-                <div class="space-y-6 text-center md:text-left">
-                    <h4 class="text-xs font-black uppercase tracking-widest text-white">Navegação</h4>
-                    <ul class="space-y-3 text-gray-500 text-sm font-bold uppercase tracking-widest">
-                        <li><a href="#inicio" class="hover:text-[#7ed957] transition-colors">Início</a></li>
-                        <li><a href="#servicos" class="hover:text-[#7ed957] transition-colors">Serviços</a></li>
-                        <li><a href="#produtos" class="hover:text-[#7ed957] transition-colors">Produtos</a></li>
-                        <li><a href="#unidades" class="hover:text-[#7ed957] transition-colors">Lojas</a></li>
+                <div class="space-y-6">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white border-b border-white/5 pb-3">Navegação</h4>
+                    <ul class="space-y-4 text-gray-500 text-sm font-bold uppercase tracking-widest">
+                        <li><a href="#inicio" class="hover:text-[#7ed957] transition-colors uppercase">Início</a></li>
+                        <li><a href="#servicos" class="hover:text-[#7ed957] transition-colors uppercase">Serviços</a></li>
+                        <li><a href="#produtos" class="hover:text-[#7ed957] transition-colors uppercase">Produtos</a></li>
+                        <li><a href="#unidades" class="hover:text-[#7ed957] transition-colors uppercase">Lojas</a></li>
                     </ul>
                 </div>
 
-                <div class="space-y-6 lg:col-span-2 text-center md:text-left">
-                    <h4 class="text-xs font-black uppercase tracking-widest text-white">Unidades Sonda</h4>
-                    <div class="grid md:grid-cols-2 gap-8 text-gray-500 text-[9px] font-bold uppercase tracking-widest">
-                        <div class="space-y-2">
-                            <p class="text-white">VILA GUILHERME</p>
-                            <p>(11) 97603-2082</p>
-                            <p>Seg a Sáb: 09h às 20h</p>
+                <div class="space-y-6 lg:col-span-2">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white border-b border-white/5 pb-3 text-center md:text-left">Unidades Sonda</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-gray-500 text-[10px] font-bold uppercase tracking-widest text-center md:text-left">
+                        <div class="space-y-3">
+                            <p class="text-white text-xs tracking-widest font-black uppercase">Vila Guilherme</p>
+                            <p class="flex items-center justify-center md:justify-start gap-2"><i data-lucide="phone" class="w-3 h-3 text-[#7ed957]"></i> (11) 97603-2082</p>
+                            <p class="flex items-center justify-center md:justify-start gap-2"><i data-lucide="clock" class="w-3 h-3 text-[#7ed957]"></i> Seg a Sáb: 09h às 20h</p>
                         </div>
-                        <div class="space-y-2">
-                            <p class="text-white">GUARULHOS</p>
-                            <p>(11) 94253-5688</p>
-                            <p>Seg a Sáb: 09h às 20h</p>
+                        <div class="space-y-3">
+                            <p class="text-white text-xs tracking-widest font-black uppercase">Guarulhos</p>
+                            <p class="flex items-center justify-center md:justify-start gap-2"><i data-lucide="phone" class="w-3 h-3 text-[#7ed957]"></i> (11) 94253-5688</p>
+                            <p class="flex items-center justify-center md:justify-start gap-2"><i data-lucide="clock" class="w-3 h-3 text-[#7ed957]"></i> Seg a Sáb: 09h às 20h</p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-[10px] text-gray-600 font-bold uppercase tracking-widest">
-                    &copy; 2024 PlugGo Store | Líder em Satisfação do Cliente.
+            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-center">
+                <div class="text-[10px] text-gray-600 font-bold uppercase tracking-widest leading-relaxed">
+                    &copy; 2024 PlugGo Store | Líder em Satisfação do Cliente e Assistência Técnica Física.
                 </div>
-                <div class="flex gap-6">
-                    <i data-lucide="instagram" class="w-4 h-4 text-gray-600 hover:text-[#7ed957] cursor-pointer"></i>
-                    <i data-lucide="facebook" class="w-4 h-4 text-gray-600 hover:text-[#7ed957] cursor-pointer"></i>
+                <div class="flex gap-8">
+                    <a href="#" class="p-3 bg-white/5 rounded-2xl text-gray-600 hover:text-[#7ed957] hover:bg-white/10 transition-all">
+                        <i data-lucide="instagram" class="w-6 h-6"></i>
+                    </a>
+                    <a href="#" class="p-3 bg-white/5 rounded-2xl text-gray-600 hover:text-[#7ed957] hover:bg-white/10 transition-all">
+                        <i data-lucide="facebook" class="w-6 h-6"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- WhatsApp Floating Central -->
-    <a href="https://wa.me/5511942535688" target="_blank" class="fixed bottom-8 right-8 w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all z-[200] group">
-        <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
-        <span class="absolute right-20 bg-white text-black px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">Falar com Especialista</span>
+    <!-- WhatsApp Flutuante -->
+    <a href="https://wa.me/5511942535688" target="_blank" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 w-16 h-16 md:w-20 md:h-20 bg-[#25D366] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-90 transition-all z-[200]">
+        <i data-lucide="message-circle" class="w-10 h-10 md:w-12 md:h-12 text-white"></i>
     </a>
 
     <script>
-        // Inicializa Lucide
         lucide.createIcons();
 
-        // Efeito de Revelação
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
         const reveal = () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
                 const elementTop = el.getBoundingClientRect().top;
-                const elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
-                    el.classList.add('active');
-                }
+                if (elementTop < window.innerHeight - 100) el.classList.add('active');
             });
         };
         window.addEventListener('scroll', reveal);
         window.onload = reveal;
 
-        // Navbar Scroll
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
             if (window.scrollY > 50) {
-                nav.style.background = 'rgba(8, 8, 8, 0.95)';
+                nav.style.background = 'rgba(8, 8, 8, 0.98)';
+                nav.style.height = '70px';
             } else {
                 nav.style.background = 'rgba(8, 8, 8, 0.85)';
+                nav.style.height = '80px';
             }
         });
     </script>
