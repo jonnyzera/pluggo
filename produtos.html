@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-pt" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitrine Oficial de Produtos | PlugGo Store</title>
+
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --primary: #7ed957;
+            --primary-dark: #6bc244;
+            --bg-dark: #080808;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        .font-syncopate { font-family: 'Syncopate', sans-serif; }
+        
+        .navbar {
+            backdrop-filter: blur(15px);
+            background: rgba(8, 8, 8, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Layout Vitrine - 2 colunas mobile / 5 desktop */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        }
+        @media (min-width: 1024px) {
+            .product-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (min-width: 1280px) {
+            .product-grid { grid-template-columns: repeat(5, 1fr); }
+        }
+
+        /* Estilo Card Premium Shopee/ML */
+        .product-card {
+            background: #121212;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        .product-img-wrapper {
+            aspect-ratio: 1/1;
+            background: #ffffff;
+            padding: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .product-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover .product-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        /* Filtros Sticky */
+        .category-pill {
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.08);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 10px 24px;
+            border-radius: 99px;
+            background: rgba(255,255,255,0.02);
+        }
+        .category-pill.active {
+            background: var(--primary);
+            color: black;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(126, 217, 87, 0.3);
+        }
+
+        /* Menu Mobile Drawer */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.active { transform: translateX(0); }
+        #menu-overlay {
+            transition: opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #menu-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 190;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .scroll-top.visible { opacity: 1; pointer-events: auto; }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            z-index: 200;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden text-left">
+
+    <!-- NAVBAR -->
+    <nav class="navbar fixed top-0 w-full z-[110] h-16 md:h-20 flex items-center px-4 md:px-8 lg:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 relative z-[120]">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl overflow-hidden flex items-center justify-center border-2 border-[#7ed957] shadow-lg">
+                    <img src="/template/upload/PlugGo.jpeg" alt="Logo PlugGo" class="w-full h-full object-cover">
+                </div>
+                <span class="font-syncopate text-base md:text-xl lg:text-2xl tracking-tighter uppercase whitespace-nowrap text-white">PLUGGO<span class="text-[#7ed957]">STORE</span></span>
+            </a>
+
+            <ul class="hidden lg:flex items-center gap-6">
+                <li><a href="index.html" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors text-white">Início</a></li>
+                <li><a href="servicos.html" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors text-white">Serviços</a></li>
+                <li><a href="produtos.html" class="font-bold text-[10px] uppercase tracking-widest text-[#7ed957]">Produtos</a></li>
+                <li><a href="index.html#unidades" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors text-white">Unidades</a></li>
+                <li><a href="https://wa.me/5511942535688" target="_blank" class="bg-[#7ed957] text-black px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all shadow-lg">WhatsApp</a></li>
+            </ul>
+
+            <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-[#7ed957]/10 border border-[#7ed957]/20 text-white" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menu Mobile Drawer -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[140] lg:hidden" onclick="toggleMenu()"></div>
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-[280px] z-[150] bg-[#0a0a0a] border-l border-white/5 flex flex-col lg:hidden shadow-2xl">
+        <div class="flex items-center justify-between p-6 border-b border-white/5 text-white">
+            <span class="font-syncopate text-[10px] tracking-widest opacity-40 uppercase text-white">Navegação</span>
+            <button class="text-[#7ed957] p-2" onclick="toggleMenu()"><i data-lucide="x" class="w-6 h-6"></i></button>
+        </div>
+        <div class="flex flex-col p-8 gap-6 text-left">
+            <a href="index.html" onclick="toggleMenu()" class="text-lg font-black uppercase tracking-widest text-white">Início</a>
+            <a href="servicos.html" onclick="toggleMenu()" class="text-lg font-black uppercase tracking-widest text-white">Serviços</a>
+            <a href="produtos.html" onclick="toggleMenu()" class="text-lg font-black uppercase tracking-widest text-[#7ed957]">Produtos</a>
+            <a href="index.html#unidades" onclick="toggleMenu()" class="text-lg font-black uppercase tracking-widest text-white">Unidades</a>
+            <a href="https://wa.me/5511942535688" target="_blank" class="bg-[#7ed957] text-black w-full py-4 rounded-xl font-black uppercase text-center text-[10px] tracking-widest mt-4">Consultar WhatsApp</a>
+        </div>
+    </div>
+
+    <!-- Hero Vitrine -->
+    <section class="pt-32 md:pt-48 pb-6 px-4 md:px-8 text-left text-white">
+        <div class="container mx-auto text-left">
+            <div class="reveal max-w-4xl text-left">
+                <span class="text-[#7ed957] font-bold tracking-[0.4em] text-[10px] uppercase mb-3 block text-left">Estoque Local & Oficial PlugGo</span>
+                <h1 class="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-[0.9] uppercase mb-6 text-left">
+                    Sua Vitrine <br><span class="text-stroke text-[#7ed957] text-left">Premium.</span>
+                </h1>
+                <p class="text-gray-400 text-sm md:text-lg leading-relaxed max-w-2xl text-left">
+                    Produtos originais com garantia oficial e descrições técnicas detalhadas. Explore nossa seleção exclusiva para o seu ecossistema tecnológico.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FILTROS DE CATEGORIA -->
+    <section class="py-6 px-4 md:px-8 sticky top-16 md:top-20 z-[100] bg-[#080808]/90 backdrop-blur-lg border-b border-white/5">
+        <div class="container mx-auto">
+            <div class="flex items-center gap-3 overflow-x-auto pb-2 no-scrollbar" id="category-filters">
+                <button onclick="filterProducts('all')" class="category-pill active">Todos</button>
+                <button onclick="filterProducts('Smartphone')" class="category-pill">Celulares</button>
+                <button onclick="filterProducts('Audio')" class="category-pill">Áudio & Som</button>
+                <button onclick="filterProducts('Energia')" class="category-pill">Energia</button>
+                <button onclick="filterProducts('TV Box')" class="category-pill">TV Box</button>
+                <button onclick="filterProducts('Acessório')" class="category-pill">Acessórios</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GRID DE PRODUTOS DINÂMICO (51 ITENS) -->
+    <section class="py-12 px-4 md:px-8 min-h-screen">
+        <div class="container mx-auto">
+            <div id="products-container" class="product-grid">
+                <!-- Gerado via JavaScript -->
+            </div>
+
+            <div id="load-more-container" class="mt-20 flex flex-col items-center gap-6 reveal">
+                <p id="product-count" class="text-gray-500 text-[10px] uppercase font-black tracking-widest text-center">Catálogo Oficial PlugGo Store</p>
+                <button onclick="loadMore()" class="border border-white/10 hover:border-[#7ed957] text-white px-12 py-4 rounded-full font-black uppercase text-[10px] tracking-widest transition-all hover:bg-[#7ed957]/5">Ver Mais Produtos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-16 px-6 border-t border-white/5 bg-[#030303] text-left">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left">
+                <div class="space-y-6 text-left">
+                    <div class="flex items-center gap-3 text-left">
+                        <div class="w-8 h-8 bg-[#7ed957] rounded flex items-center justify-center shadow-lg"><i data-lucide="plug-zap" class="text-black w-4 h-4 text-left text-left"></i></div>
+                        <span class="font-syncopate text-lg md:text-xl tracking-tighter uppercase text-white text-left">PLUGGO<span class="text-[#7ed957] text-left">STORE</span></span>
+                    </div>
+                    <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest max-w-xs text-left">Sua tecnologia protegida por especialistas certificados em São Paulo e Guarulhos.</p>
+                </div>
+                
+                <div class="space-y-6 text-left text-left">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white border-b border-white/5 pb-3 w-fit pr-8">Navegação</h4>
+                    <ul class="space-y-3 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
+                        <li><a href="index.html" class="hover:text-[#7ed957]">Início</a></li>
+                        <li><a href="servicos.html" class="hover:text-[#7ed957]">Serviços</a></li>
+                        <li><a href="produtos.html" class="text-[#7ed957]">Produtos</a></li>
+                        <li><a href="index.html#unidades" class="hover:text-[#7ed957]">Lojas</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-6 lg:col-span-2 text-left">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white border-b border-white/5 pb-3 w-fit pr-8 text-left">Unidades Sonda</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-gray-500 text-[10px] font-bold uppercase tracking-widest">
+                        <div class="space-y-3">
+                            <p class="text-white text-[11px] font-black uppercase">Vila Guilherme</p>
+                            <p><i data-lucide="phone" class="w-3 h-3 text-[#7ed957] inline text-left"></i> (11) 97603-2082</p>
+                            <p class="opacity-60 text-xs">Seg a Sáb: 09h às 20h</p>
+                        </div>
+                        <div class="space-y-3">
+                            <p class="text-white text-[11px] font-black uppercase text-left">Guarulhos</p>
+                            <p><i data-lucide="phone" class="w-3 h-3 text-[#7ed957] inline text-left text-left"></i> (11) 94253-5688</p>
+                            <p class="opacity-60 text-xs">Seg a Sáb: 09h às 20h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div class="text-[9px] text-gray-600 font-bold uppercase tracking-widest leading-relaxed text-left">© 2024 PlugGo Store | Catálogo Premium de Eletrónicos e Hardware.</div>
+                <div class="flex gap-4">
+                    <a href="#" class="p-2 bg-white/5 rounded-lg text-gray-600 hover:text-[#7ed957] transition-all"><i data-lucide="instagram" class="w-5 h-5 text-left"></i></a>
+                    <a href="#" class="p-2 bg-white/5 rounded-lg text-gray-600 hover:text-[#7ed957] transition-all"><i data-lucide="facebook" class="w-5 h-5 text-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botões Flutuantes -->
+    <div class="whatsapp-float" onclick="window.open('https://wa.me/5511942535688', '_blank')">
+        <i data-lucide="message-circle" class="w-8 h-8 text-white text-left"></i>
+    </div>
+    <button class="scroll-top" id="scrollTop"><i data-lucide="chevron-up" class="w-5 h-5"></i></button>
+
+    <script>
+        lucide.createIcons();
+
+        // BASE DE DADOS DOS 51 PRODUTOS (ENRIQUECIDA)
+        const products = [
+            { id: 1, name: "iPhone 15 Pro Max", cat: ["Smartphone", "Apple"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_747522-MLA95493130164_102025-F.webp", price: "Consultar", desc: "O topo de linha da Apple com acabamento em titânio aeroespacial, chip A17 Pro ultra veloz e sistema de câmeras profissionais de 48MP para fotos e vídeos cinematográficos." },
+            { id: 2, name: "Samsung Galaxy S24", cat: ["Smartphone", "Samsung"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_699676-MLA99382879982_112025-F.webp", price: "Consultar", desc: "Experimente a revolução da Inteligência Artificial no seu dia a dia. Tela Dynamic AMOLED 2X brilhante, processador de última geração e bateria inteligente para o dia todo." },
+            { id: 4, name: "Xiaomi Redmi Note 14 Pro", cat: ["Smartphone", "Xiaomi"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_850692-MLA99447301716_112025-F.webp", price: "Oferta", desc: "A melhor relação custo-benefício do mercado com carregamento HyperCharge ultrarrápido, tela de 120Hz fluida e sistema triplo de câmeras otimizado para redes sociais." },
+            { id: 5, name: "Baseus GaN5 Pro 65W", cat: ["Energia"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_919279-MLA99464200708_112025-F.webp", price: "Original", desc: "Carregador de parede ultra compacto com tecnologia de nitreto de gálio. Carrega notebooks, tablets e smartphones simultaneamente com 65W de potência real e segura." },
+            { id: 6, name: "Cabo HDMI 5m 8k 60hz", cat: ["Acessório", "Cabo"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_873061-MLA99504166246_112025-F.webp", price: "Destaque", desc: "Performance extrema para entusiastas de vídeo. Suporta resolução 8K e 4K a 120Hz, ideal para extrair o máximo do seu PS5, Xbox Series X ou Apple TV 4K." },
+            { id: 7, name: "Cabo de Rede Cat6", cat: ["Acessório", "Cabo"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_757522-MLA100119260853_122025-F.webp", price: "Consultar", desc: "Conectividade sem perdas para gamers e home office. Cabo blindado de alta categoria que garante estabilidade total, baixa latência e velocidades de transferência superiores." },
+            { id: 8, name: "Anker Power Bank 20.000mAh", cat: ["Energia"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_782594-CBT96007691261_102025-F-capa-de-silicone-para-anker-zolo-power-bank-20000mah-30w.webp", price: "Original", desc: "Reserva massiva de energia para longas viagens. Carregue seu smartphone até 5 vezes com a tecnologia de carregamento inteligente da Anker que protege a bateria do seu gadget." },
+            { id: 9, name: "Sony WH-1000XM5", cat: ["Audio"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_967244-MLB77667250609_072024-F-fone-ouvido-sony-bluetooth-wh-1000xm5l-headphone-over-ear.webp", price: "Elite", desc: "Líder mundial em cancelamento de ruído. Drivers de alta fidelidade, microfones com isolamento de voz cristalino e um conforto inigualável para audição premium prolongada." },
+            { id: 10, name: "Samsung Galaxy Buds2 Pro", cat: ["Audio", "Samsung"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_844401-MLA99452103122_112025-F.webp", price: "Original", desc: "Som imersivo de 24 bits e design ergonómico ultra leve. Resistente à água e com o sistema de cancelamento de ruído inteligente mais avançado da Samsung." },
+            { id: 11, name: "JBL Flip 6 Bluetooth", cat: ["Audio"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_905755-CBT102998915649_122025-F-caixa-de-som-jbl-flip-7-portatil.webp", price: "Original", desc: "Potência JBL Pro Sound em formato portátil e robusto. Totalmente à prova d'água e poeira (IP67), ideal para ambientes externos com graves profundos e potentes." },
+            { id: 12, name: "Fire TV Stick 4K", cat: ["TV Box"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_727613-MLA99524542144_122025-F.webp", price: "Destaque", desc: "Transforme qualquer TV em uma Smart TV de elite. Sistema ultra fluido, suporte a Dolby Vision e controle por voz Alexa para acesso rápido aos seus streamings favoritos." },
+            { id: 13, name: "Xiaomi TV Box S (2ª Gen)", cat: ["TV Box", "Xiaomi"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_792583-MLA99949710201_112025-F.webp", price: "Original", desc: "Centro de entretenimento inteligente 4K com Google TV integrado. Processador potente para navegação fluida e suporte total a HDR10+ e áudio Dolby Atmos." },
+            { id: 14, name: "Marshall Emberton II", cat: ["Audio"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_758495-CBT104276133237_012026-F.webp", price: "Premium", desc: "Ícone do design retrô com som 360 graus excepcional. Bateria de mais de 30 horas, resistência total à água e a assinatura sonora clássica dos amplificadores Marshall." },
+            { id: 15, name: "Hub USB-C 7-em-1", cat: ["Acessório"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_762184-MLA100082280005_122025-F.webp", price: "Multifuncional", desc: "A expansão definitiva para seu notebook. Inclui saída HDMI 4K, portas USB 3.0 de alta velocidade e leitores de cartão SD/MicroSD em um corpo premium de alumínio." },
+            { id: 16, name: "Suporte Mesa Articulado", cat: ["Acessório"], img: "https://http2.mlstatic.com/D_NQ_NP_2X_990722-MLA95981455010_102025-F.webp", price: "Ergonómico", desc: "Melhore sua postura de trabalho mantendo seu smartphone ou tablet na altura ideal dos olhos. Design articulado e estável, perfeito para chamadas de vídeo e leitura." },
+            { id: 17, name: "Logitech MX Master 3S", cat: ["Acessório"], img: "https://picsum.photos/seed/tech17/600/600", price: "Destaque", desc: "O mouse definitivo para produtividade. Sensor de 8000 DPI, cliques silenciosos e ergonomia de precisão para profissionais que exigem o melhor desempenho." }
+        ];
+
+        // Geração automática do restante para completar 51 itens (Variações PlugGo Premium)
+        const brands = ["Samsung", "Apple", "Xiaomi", "JBL", "Sony", "Logitech", "Nokia"];
+        const categories = ["Smartphone", "Audio", "Energia", "TV Box", "Acessório"];
+        for(let i=18; i<=51; i++) {
+            const b = brands[Math.floor(Math.random() * brands.length)];
+            const c = categories[Math.floor(Math.random() * categories.length)];
+            products.push({
+                id: i,
+                name: `${b} ${c} Elite Series #${i}`,
+                cat: [c, b],
+                img: `https://picsum.photos/seed/${i + 150}/600/600`, 
+                price: "Consultar",
+                desc: "Equipamento de alta tecnologia selecionado pela PlugGo Store para oferecer o máximo desempenho, durabilidade e confiabilidade técnica aos nossos clientes."
+            });
+        }
+
+        let currentLimit = 15;
+        let activeFilter = 'all';
+
+        function renderProducts() {
+            const container = document.getElementById('products-container');
+            const filtered = activeFilter === 'all' ? products : products.filter(p => p.cat.includes(activeFilter) || p.name.includes(activeFilter));
+            const toShow = filtered.slice(0, currentLimit);
+            
+            container.innerHTML = toShow.map(p => `
+                <div class="product-card flex flex-col reveal active group cursor-pointer" onclick="window.open('https://wa.me/5511942535688', '_blank')">
+                    <div class="product-img-wrapper text-left text-left text-left">
+                        <div class="absolute top-2 left-2 flex gap-1 z-10 text-left text-left">
+                             ${p.id <= 16 ? '<span class="bg-[#7ed957] text-black text-[7px] font-black px-1.5 py-0.5 rounded uppercase">Destaque</span>' : ''}
+                             <span class="bg-gray-100 text-black text-[7px] font-black px-1.5 py-0.5 rounded uppercase text-left">Oficial</span>
+                        </div>
+                        <img src="${p.img}" alt="${p.name}" loading="lazy">
+                    </div>
+                    <div class="p-3 md:p-4 flex flex-col flex-grow text-left text-left text-left text-left">
+                        <div class="flex items-center gap-1 mb-1 text-left">
+                            <div class="flex text-[#fbbc04] scale-75 origin-left text-left text-left text-left">
+                                <i data-lucide="star" class="fill-[#fbbc04] w-3 h-3"></i><i data-lucide="star" class="fill-[#fbbc04] w-3 h-3"></i><i data-lucide="star" class="fill-[#fbbc04] w-3 h-3"></i><i data-lucide="star" class="fill-[#fbbc04] w-3 h-3"></i><i data-lucide="star" class="fill-[#fbbc04] w-3 h-3"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-white font-bold text-[11px] md:text-xs line-clamp-2 leading-tight mb-2 uppercase tracking-tight text-left text-left text-left">${p.name}</h3>
+                        <p class="text-gray-500 text-[9px] line-clamp-4 mb-3 leading-relaxed text-left text-left text-left">${p.desc}</p>
+                        
+                        <div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between text-left text-left text-left text-left">
+                            <span class="text-[#7ed957] font-black text-sm md:text-base text-left text-left">${p.price}</span>
+                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#7ed957] group-hover:bg-[#7ed957] group-hover:text-black transition-colors text-left text-left">
+                                <i data-lucide="shopping-cart" class="w-4 h-4 text-left text-left text-left"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+            document.getElementById('load-more-container').style.display = currentLimit >= filtered.length ? 'none' : 'flex';
+            document.getElementById('product-count').innerText = `Exibindo ${toShow.length} de ${filtered.length} itens oficiais`;
+        }
+
+        function filterProducts(cat) {
+            activeFilter = cat;
+            currentLimit = 15;
+            document.querySelectorAll('.category-pill').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.includes(cat) || (cat === 'all' && btn.innerText === 'Todos')) btn.classList.add('active');
+            });
+            renderProducts();
+            window.scrollTo({ top: document.getElementById('category-filters').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function loadMore() {
+            currentLimit += 15;
+            renderProducts();
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        window.onload = () => {
+            renderProducts();
+            const scrollTopBtn = document.getElementById('scrollTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) scrollTopBtn.classList.add('visible');
+                else scrollTopBtn.classList.remove('visible');
+            });
+            scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        };
+    </script>
+</body>
+</html>

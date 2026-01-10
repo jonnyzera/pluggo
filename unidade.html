@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-pt" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossas Unidades | PlugGo Store</title>
+
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --primary: #7ed957;
+            --primary-dark: #6bc244;
+            --bg-dark: #080808;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        .font-syncopate { font-family: 'Syncopate', sans-serif; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+        }
+        
+        .navbar {
+            backdrop-filter: blur(15px);
+            background: rgba(8, 8, 8, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-stroke {
+            -webkit-text-stroke: 1px var(--primary);
+            color: transparent;
+        }
+
+        /* Menu Mobile Drawer */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.active { transform: translateX(0); }
+        #menu-overlay {
+            transition: opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #menu-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .map-container {
+            filter: grayscale(1) invert(0.9) contrast(1.2);
+            border-radius: 32px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 190;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .scroll-top.visible { opacity: 1; pointer-events: auto; }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            z-index: 200;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden text-left">
+
+    <!-- NAVBAR -->
+    <nav class="navbar fixed top-0 w-full z-[110] h-16 md:h-20 flex items-center px-4 md:px-8 lg:px-12">
+        <div class="container mx-auto flex justify-between items-center text-left">
+            <a href="index.html" class="flex items-center gap-3 relative z-[120]">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl overflow-hidden flex items-center justify-center border-2 border-[#7ed957] shadow-lg">
+                    <img src="/template/upload/PlugGo.jpeg" alt="Logótipo PlugGo" class="w-full h-full object-cover">
+                </div>
+                <span class="font-syncopate text-base md:text-xl lg:text-2xl tracking-tighter uppercase whitespace-nowrap">PLUGGO<span class="text-[#7ed957]">STORE</span></span>
+            </a>
+
+            <ul class="hidden lg:flex items-center gap-6">
+                <li><a href="index.html" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors text-white">Início</a></li>
+                <li><a href="servicos.html" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors text-white text-left text-left">Serviços</a></li>
+                <li><a href="produtos.html" class="font-bold text-[10px] uppercase tracking-widest hover:text-[#7ed957] transition-colors text-white text-left">Produtos</a></li>
+                <li><a href="unidades.html" class="font-bold text-[10px] uppercase tracking-widest text-[#7ed957] text-left">Unidades</a></li>
+                <li><a href="https://wa.me/5511942535688" target="_blank" class="bg-[#7ed957] text-black px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all shadow-lg">WhatsApp Oficial</a></li>
+            </ul>
+
+            <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-[#7ed957]/10 border border-[#7ed957]/20 text-white" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-6 h-6 text-[#7ed957]"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menu Mobile -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[140] lg:hidden text-left" onclick="toggleMenu()"></div>
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-[280px] z-[150] bg-[#0a0a0a] border-l border-white/5 flex flex-col lg:hidden shadow-2xl text-left">
+        <div class="flex items-center justify-between p-6 border-b border-white/5">
+            <span class="font-syncopate text-[10px] tracking-widest opacity-40 uppercase text-white">Navegação</span>
+            <button class="text-[#7ed957] p-2" onclick="toggleMenu()"><i data-lucide="x" class="w-6 h-6"></i></button>
+        </div>
+        <div class="flex flex-col p-8 gap-6 text-left">
+            <a href="index.html" onclick="toggleMenu()" class="text-lg font-black uppercase tracking-widest text-white">Início</a>
+            <a href="servicos.html" onclick="toggleMenu()" class="text-lg font-black uppercase tracking-widest text-white">Serviços</a>
+            <a href="produtos.html" onclick="toggleMenu()" class="text-lg font-black uppercase tracking-widest text-white">Produtos</a>
+            <a href="unidades.html" onclick="toggleMenu()" class="text-lg font-black uppercase tracking-widest text-[#7ed957]">Unidades</a>
+            <a href="https://wa.me/5511942535688" target="_blank" class="bg-[#7ed957] text-black w-full py-4 rounded-xl font-black uppercase text-center text-[10px] tracking-widest mt-4">WhatsApp Oficial</a>
+        </div>
+    </div>
+
+    <!-- Hero Unidades -->
+    <section class="pt-32 md:pt-48 pb-16 px-4 md:px-8 text-left text-white overflow-hidden relative">
+        <div class="container mx-auto">
+            <div class="reveal max-w-4xl">
+                <span class="text-[#7ed957] font-bold tracking-[0.4em] text-[10px] uppercase mb-4 block">Presença Física e Segurança</span>
+                <h1 class="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-[0.9] uppercase mb-8">
+                    Onde <br><span class="text-stroke text-[#7ed957]">Estamos.</span>
+                </h1>
+                <p class="text-gray-400 text-sm md:text-xl leading-relaxed max-w-2xl">
+                    Encontre-nos em localizações estratégicas dentro do Sonda Supermercados. Conveniência total, estacionamento grátis e o melhor suporte técnico da região.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- UNIDADE VILA GUILHERME -->
+    <section class="py-16 md:py-24 px-4 md:px-8 bg-[#050505] text-left">
+        <div class="container mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div class="reveal space-y-10">
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#7ed957]/30 bg-[#7ed957]/5">
+                            <span class="w-2 h-2 rounded-full bg-[#7ed957] animate-pulse"></span>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-[#7ed957]">Unidade Sonda Vila Guilherme</span>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-black uppercase leading-tight text-white">Quiosque <br><span class="text-[#7ed957]">Vila Guilherme</span></h2>
+                        <p class="text-gray-400 text-base leading-relaxed">Localizado estrategicamente no corredor principal do Supermercado Sonda, nosso quiosque oferece atendimento expresso para iPhone, Samsung e venda de acessórios premium.</p>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-3xl space-y-3 text-left">
+                            <i data-lucide="clock" class="w-6 h-6 text-[#7ed957]"></i>
+                            <h4 class="text-white font-black uppercase text-[10px] tracking-widest">Horário de Atendimento</h4>
+                            <p class="text-gray-500 text-xs">Segunda a Sábado: 09h às 20h<br><span class="text-[#7ed957] font-bold">Domingo: 10h às 16h</span></p>
+                        </div>
+                        <div class="glass-card p-6 rounded-3xl space-y-3 text-left">
+                            <i data-lucide="map-pin" class="w-6 h-6 text-[#7ed957]"></i>
+                            <h4 class="text-white font-black uppercase text-[10px] tracking-widest">Endereço</h4>
+                            <p class="text-gray-500 text-xs text-left">R. Maria Cândida, 1511<br>Vila Guilherme, São Paulo - SP</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://wa.me/5511976032082" target="_blank" class="bg-[#7ed957] text-black px-10 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-white transition-all shadow-xl flex items-center justify-center gap-2">WhatsApp Vila Guilherme <i data-lucide="message-circle" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <div class="reveal space-y-6">
+                    <div class="glass-card p-3 rounded-[40px] shadow-2xl">
+                        <img src="/template/upload/plug_vilaguilherme.jpg" alt="Quiosque PlugGo Vila Guilherme" class="w-full h-80 object-cover rounded-[30px] brightness-90">
+                        <div class="p-6">
+                            <p class="text-[#7ed957] font-black uppercase italic text-xs tracking-tighter">"Onde a tecnologia recebe tratamento premium."</p>
+                        </div>
+                    </div>
+                    <div class="map-container h-64 w-full">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.831518534062!2d-46.60464622376918!3d-23.502544959518342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59265f299f01%3A0x673030d7b233a1e1!2sR.%20Maria%20C%C3%A2ndida%2C%201511%20-%20Vila%20Guilherme%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2002071-013!5e0!3m2!1spt-BR!2sbr!4v1715456000000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UNIDADE GUARULHOS -->
+    <section class="py-16 md:py-24 px-4 md:px-8 text-left">
+        <div class="container mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div class="reveal lg:order-2 space-y-10">
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#7ed957]/30 bg-[#7ed957]/5 text-left">
+                            <span class="w-2 h-2 rounded-full bg-[#7ed957] animate-pulse"></span>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-[#7ed957]">Matriz de Engenharia & Hardware</span>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-black uppercase leading-tight text-white">Hub <br><span class="text-[#7ed957]">Guarulhos</span></h2>
+                        <p class="text-gray-400 text-base leading-relaxed">Nossa matriz tecnológica focada em reparos complexos de hardware, manutenção de consoles gamer e assistência especializada de notebooks.</p>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-3xl space-y-3 text-left">
+                            <i data-lucide="clock" class="w-6 h-6 text-[#7ed957]"></i>
+                            <h4 class="text-white font-black uppercase text-[10px] tracking-widest text-left">Horário de Atendimento</h4>
+                            <p class="text-gray-500 text-xs">Segunda a Sábado: 09h às 20h<br><span class="text-[#7ed957] font-bold">Domingo: 10h às 16h</span></p>
+                        </div>
+                        <div class="glass-card p-6 rounded-3xl space-y-3 text-left">
+                            <i data-lucide="map-pin" class="w-6 h-6 text-[#7ed957]"></i>
+                            <h4 class="text-white font-black uppercase text-[10px] tracking-widest text-left">Endereço</h4>
+                            <p class="text-gray-500 text-xs text-left">Av. Otávio Braga de Mesquita, 1450<br>Vila Barros, Guarulhos - SP</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://wa.me/5511942535688" target="_blank" class="bg-[#7ed957] text-black px-10 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-white transition-all shadow-xl flex items-center justify-center gap-2">WhatsApp Guarulhos <i data-lucide="message-circle" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <div class="reveal lg:order-1 space-y-6">
+                    <div class="glass-card p-3 rounded-[40px] shadow-2xl">
+                        <img src="/template/upload/capcom_loja.jpg" alt="PlugGo Hub Guarulhos" class="w-full h-80 object-cover rounded-[30px] brightness-90">
+                        <div class="p-6">
+                            <p class="text-[#7ed957] font-black uppercase italic text-xs tracking-tighter">"Excelência em Engenharia e Performance Gamer."</p>
+                        </div>
+                    </div>
+                    <div class="map-container h-64 w-full">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3660.1062973715843!2d-46.50570532377042!3d-23.43851595781358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce8aa029d2f099%3A0xf695669f635606d1!2sAv.%20Ot%C3%A1vio%20Braga%20de%20Mesquita%2C%201450%20-%20Vila%20Barros%2C%20Guarulhos%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1715456100000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefícios -->
+    <section class="py-24 px-4 md:px-8 border-t border-white/5 text-left">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+                <div class="text-center space-y-4 reveal">
+                    <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] mx-auto"><i data-lucide="parking-circle" class="w-8 h-8"></i></div>
+                    <h3 class="text-lg font-black uppercase italic text-white text-center">Estacionamento Grátis</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed text-center">Tranquilidade total para o seu veículo enquanto cuidamos da sua tecnologia.</p>
+                </div>
+                <div class="text-center space-y-4 reveal" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] mx-auto"><i data-lucide="shield-check" class="w-8 h-8"></i></div>
+                    <h3 class="text-lg font-black uppercase italic text-white text-center">Ambiente Seguro</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed text-center">Nossas unidades contam com monitoramento 24h e segurança do supermercado Sonda.</p>
+                </div>
+                <div class="text-center space-y-4 reveal" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-[#7ed957] mx-auto"><i data-lucide="zap" class="w-8 h-8"></i></div>
+                    <h3 class="text-lg font-black uppercase italic text-white text-center">Suporte Imediato</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed text-center">Fale diretamente com os nossos técnicos e receba o diagnóstico na hora.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-16 px-6 border-t border-white/5 bg-[#030303] text-left">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left">
+                <div class="space-y-6 text-left">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-[#7ed957] rounded flex items-center justify-center shadow-lg"><i data-lucide="plug-zap" class="text-black w-4 h-4"></i></div>
+                        <span class="font-syncopate text-lg md:text-xl tracking-tighter uppercase text-white">PLUGGO<span class="text-[#7ed957]">STORE</span></span>
+                    </div>
+                    <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest max-w-xs text-left">Sua tecnologia protegida por especialistas certificados em São Paulo e Guarulhos.</p>
+                </div>
+                
+                <div class="space-y-6 text-left">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white border-b border-white/5 pb-3 w-fit pr-8">Navegação</h4>
+                    <ul class="space-y-3 text-gray-500 text-[11px] font-bold uppercase tracking-widest text-left">
+                        <li><a href="index.html" class="hover:text-[#7ed957]">Início</a></li>
+                        <li><a href="servicos.html" class="hover:text-[#7ed957]">Serviços</a></li>
+                        <li><a href="produtos.html" class="hover:text-[#7ed957]">Produtos</a></li>
+                        <li><a href="unidades.html" class="text-[#7ed957]">Unidades</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-6 lg:col-span-2 text-left">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-white border-b border-white/5 pb-3 w-fit pr-8 text-left">Unidades Sonda</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-gray-500 text-[10px] font-bold uppercase tracking-widest">
+                        <div class="space-y-3 text-left">
+                            <p class="text-white text-[11px] font-black uppercase">Vila Guilherme</p>
+                            <p>(11) 97603-2082</p>
+                            <p class="opacity-60 text-xs">Seg a Sáb: 09h-20h | <span class="text-white font-bold">Dom: 10h-16h</span></p>
+                        </div>
+                        <div class="space-y-3 text-left">
+                            <p class="text-white text-[11px] font-black uppercase">Guarulhos</p>
+                            <p>(11) 94253-5688</p>
+                            <p class="opacity-60 text-xs">Seg a Sáb: 09h-20h | <span class="text-white font-bold">Dom: 10h-16h</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-left">
+                <div class="text-[9px] text-gray-600 font-bold uppercase tracking-widest leading-relaxed">© 2024 PlugGo Store | Especialistas Certificados em Sonda Supermercados.</div>
+                <div class="flex gap-4">
+                    <a href="#" class="p-2 bg-white/5 rounded-lg text-gray-600 hover:text-[#7ed957] transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="p-2 bg-white/5 rounded-lg text-gray-600 hover:text-[#7ed957] transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Flutuante -->
+    <div class="whatsapp-float" onclick="window.open('https://wa.me/5511942535688', '_blank')">
+        <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('menu-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        const scrollTopBtn = document.createElement('button');
+        scrollTopBtn.innerHTML = '<i data-lucide="chevron-up" class="w-5 h-5"></i>';
+        scrollTopBtn.className = 'scroll-top';
+        scrollTopBtn.id = 'scrollTop';
+        document.body.appendChild(scrollTopBtn);
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) scrollTopBtn.classList.add('visible');
+            else scrollTopBtn.classList.remove('visible');
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < window.innerHeight - 80) el.classList.add('active');
+            });
+        };
+        window.addEventListener('scroll', reveal);
+        window.onload = reveal;
+    </script>
+</body>
+</html>
